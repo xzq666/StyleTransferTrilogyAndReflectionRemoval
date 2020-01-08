@@ -5,7 +5,7 @@
 import torch
 import torch.optim as optim
 import torch.nn.functional as F
-from utils import read_image, imshow
+from utils import read_image, imshow, gram_matrix
 import matplotlib.pyplot as plt
 import torchvision.models as models
 from my_models import VGG
@@ -36,17 +36,6 @@ vgg16 = VGG(vgg16.features[:23]).to(device).eval()
 style_features = vgg16(style_img)
 content_features = vgg16(content_img)
 print([x.shape for x in content_features])
-
-
-def gram_matrix(y):
-    """
-    计算Gram矩阵
-    """
-    (b, ch, h, w) = y.size()
-    features = y.view(b, ch, w * h)
-    features_t = features.transpose(1, 2)
-    gram = features.bmm(features_t) / (ch * h * w)
-    return gram
 
 
 style_grams = [gram_matrix(x) for x in style_features]
