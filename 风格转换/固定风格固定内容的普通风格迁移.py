@@ -37,7 +37,6 @@ style_features = vgg16(style_img)
 content_features = vgg16(content_img)
 print([x.shape for x in content_features])
 
-
 style_grams = [gram_matrix(x) for x in style_features]
 print([x.shape for x in style_grams])
 
